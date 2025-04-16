@@ -5,31 +5,30 @@ const useWallet = () => {
 
   const connect = async () => {
     try {
-      if (!window.ethereum) {
-        alert("🦊 Please install MetaMask to continue")
+      if (typeof window === 'undefined' || !window.ethereum) {
+        alert("🦊 MetaMask not detected.\n\nOn iPhone, open this site using the MetaMask *in-app browser*.")
         return
       }
 
-      const accounts = await window.ethereum.request({
-        method: 'eth_requestAccounts'
-      })
+      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" })
 
       if (accounts?.length > 0) {
         setAddress(accounts[0])
       } else {
-        alert("⚠️ MetaMask returned no accounts.")
+        alert("⚠️ No accounts returned from MetaMask.")
       }
-    } catch (err) {
-      console.error("MetaMask connect error:", err)
-      alert("❌ Error connecting wallet. See console.")
+    } catch (error) {
+      console.error("❌ Wallet connect error:", error)
+      alert("❌ Failed to connect MetaMask. Check console for details.")
     }
   }
 
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.request({ method: 'eth_accounts' }).then((accounts) => {
-        if (accounts[0]) setAddress(accounts[0])
-      })
+    if (typeof window !== 'undefined' && window.ethereum) {
+      window.ethereum.request({ method: 'eth_accounts' })
+        .then((accounts) => {
+          if (accounts[0]) setAddress(accounts[0])
+        })
 
       window.ethereum.on('accountsChanged', (accounts) => {
         setAddress(accounts[0] || null)
