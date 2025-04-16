@@ -5,7 +5,7 @@ import Mint from './pages/Mint'
 import Explorer from './pages/Explorer'
 import Viewer from './pages/Viewer'
 import Stats from './pages/Stats'
-import Submit from './pages/Submit' // ✅ Import the new page
+import Submit from './pages/Submit'
 import useWallet from './hooks/useWallet'
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
           <Link to="/explorer">Explorer</Link> |{" "}
           <Link to="/viewer">Viewer</Link> |{" "}
           <Link to="/stats">Stats</Link> |{" "}
-          <Link to="/submit">Submit</Link> {/* ✅ New link added */}
+          <Link to="/submit">Submit</Link>
         </nav>
 
         <div style={{ marginTop: '10px' }}>
@@ -46,9 +46,29 @@ function App() {
           <Route path="/explorer" element={<Explorer />} />
           <Route path="/viewer" element={<Viewer />} />
           <Route path="/stats" element={<Stats />} />
-          <Route path="/submit" element={<Submit />} /> {/* ✅ Route added */}
+          <Route path="/submit" element={<Submit />} />
         </Routes>
       </main>
+
+      {/* 🌐 Footer */}
+      <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '14px' }}>
+        <hr />
+        <p>
+          ☠️ View the <strong>FUGA Token</strong>:
+          {" "}
+          <a href="https://basescan.org/token/0xc0eB2B5773d05c667018fe005910f407B20D530f" target="_blank" rel="noopener noreferrer">
+            BaseScan
+          </a>{" "}
+          | Contract:
+          {" "}
+          <a href="https://basescan.org/address/0xc0eB2B5773d05c667018fe005910f407B20D530f" target="_blank" rel="noopener noreferrer">
+            0xc0eB...530f
+          </a>
+        </p>
+        <p>
+          🧾 Token Symbol: <code>FUGA</code> | Standard: <code>ERC-721 Soulbound</code>
+        </p>
+      </footer>
     </Router>
   )
 }
