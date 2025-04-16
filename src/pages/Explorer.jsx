@@ -5,22 +5,28 @@ const API_KEY = 'TV44EWPVUDHKV5ZKBR4XEJVNJQM6TT5KRD'
 
 const Explorer = () => {
   const [wallets, setWallets] = useState([])
+  const [labels, setLabels] = useState({})
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const fetchMintedWallets = async () => {
+    const fetchData = async () => {
       try {
-        const response = await fetch(`https://api.basescan.org/api?module=account&action=tokennfttx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=1000&sort=asc&apikey=${API_KEY}`)
-        const data = await response.json()
+        const txRes = await fetch(`https://api.basescan.org/api?module=account&action=tokennfttx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=1000&sort=asc&apikey=${API_KEY}`)
+        const txData = await txRes.json()
 
-        if (data.status !== '1') {
-          throw new Error('Failed to fetch data from BaseScan')
-        }
+        const labelRes = await fetch('/data/grifter-submissions.json')
+        const labelData = await labelRes.json()
 
-        const mints = data.result.filter(tx => tx.from === '0x0000000000000000000000000000000000000000')
+        const labelMap = {}
+        labelData.forEach(entry => {
+          labelMap[entry.wallet.toLowerCase()] = entry.label
+        })
+
+        const mints = txData.result.filter(tx => tx.from === '0x0000000000000000000000000000000000000000')
         const uniqueWallets = Array.from(new Set(mints.map(tx => tx.to.toLowerCase())))
 
         setWallets(uniqueWallets)
+        setLabels(labelMap)
       } catch (err) {
         console.error('Error loading explorer data:', err)
         setWallets([])
@@ -29,7 +35,7 @@ const Explorer = () => {
       }
     }
 
-    fetchMintedWallets()
+    fetchData()
   }, [])
 
   return (
@@ -42,13 +48,16 @@ const Explorer = () => {
 
       {!loading && wallets.length > 0 && (
         <ul>
-          {wallets.map((address, index) => (
-            <li key={index}>
-              <a href={`https://basescan.org/address/${address}`} target="_blank" rel="noopener noreferrer">
-                {address}
-              </a>
-            </li>
-          ))}
+          {wallets.map((address, index) => {
+            const label = labels[address.toLowerCase()]
+            return (
+              <li key={index}>
+                <a href={`https://basescan.org/address/${address}`} target="_blank" rel="noopener noreferrer">
+                  {label ? `${label} (${address.slice(0, 6)}...${address.slice(-4)})` : address}
+                </a>
+              </li>
+            )
+          })}
         </ul>
       )}
     </div>
