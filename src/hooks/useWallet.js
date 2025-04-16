@@ -5,7 +5,7 @@ const useWallet = () => {
 
   const connect = async () => {
     if (!window.ethereum) {
-      alert("Please install MetaMask to use this app.")
+      alert("🦊 Please install MetaMask to use this app.")
       return
     }
 
@@ -14,14 +14,20 @@ const useWallet = () => {
         method: "eth_requestAccounts"
       })
       setAddress(accounts[0])
-    } catch (err) {
-      console.error("MetaMask connection failed", err)
+    } catch (error) {
+      console.error("MetaMask connection error:", error)
     }
   }
 
   useEffect(() => {
     if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (acc) => setAddress(acc[0] || null))
+      window.ethereum.request({ method: 'eth_accounts' }).then((accounts) => {
+        if (accounts[0]) setAddress(accounts[0])
+      })
+
+      window.ethereum.on('accountsChanged', (accounts) => {
+        setAddress(accounts[0] || null)
+      })
     }
   }, [])
 
