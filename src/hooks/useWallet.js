@@ -4,18 +4,24 @@ const useWallet = () => {
   const [address, setAddress] = useState(null)
 
   const connect = async () => {
-    if (!window.ethereum) {
-      alert("🦊 Please install MetaMask to use this app.")
-      return
-    }
-
     try {
+      if (!window.ethereum) {
+        alert("🦊 Please install MetaMask to continue")
+        return
+      }
+
       const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts"
+        method: 'eth_requestAccounts'
       })
-      setAddress(accounts[0])
-    } catch (error) {
-      console.error("MetaMask connection error:", error)
+
+      if (accounts?.length > 0) {
+        setAddress(accounts[0])
+      } else {
+        alert("⚠️ MetaMask returned no accounts.")
+      }
+    } catch (err) {
+      console.error("MetaMask connect error:", err)
+      alert("❌ Error connecting wallet. See console.")
     }
   }
 
