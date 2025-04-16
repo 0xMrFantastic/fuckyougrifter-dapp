@@ -5,6 +5,7 @@ import Mint from './pages/Mint'
 import Explorer from './pages/Explorer'
 import Viewer from './pages/Viewer'
 import Stats from './pages/Stats'
+import Submit from './pages/Submit' // ✅ Import the new page
 import useWallet from './hooks/useWallet'
 
 function App() {
@@ -16,13 +17,16 @@ function App() {
     <Router>
       <header>
         <h1>FuckYouGrifter</h1>
+
         <nav>
           <Link to="/">Home</Link> |{" "}
           <Link to="/mint">Mint</Link> |{" "}
           <Link to="/explorer">Explorer</Link> |{" "}
           <Link to="/viewer">Viewer</Link> |{" "}
-          <Link to="/stats">Stats</Link>
+          <Link to="/stats">Stats</Link> |{" "}
+          <Link to="/submit">Submit</Link> {/* ✅ New link added */}
         </nav>
+
         <div style={{ marginTop: '10px' }}>
           {!address ? (
             <button onClick={connect}>🦊 Connect Wallet</button>
@@ -34,6 +38,7 @@ function App() {
           )}
         </div>
       </header>
+
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -41,6 +46,7 @@ function App() {
           <Route path="/explorer" element={<Explorer />} />
           <Route path="/viewer" element={<Viewer />} />
           <Route path="/stats" element={<Stats />} />
+          <Route path="/submit" element={<Submit />} /> {/* ✅ Route added */}
         </Routes>
       </main>
     </Router>
