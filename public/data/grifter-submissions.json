@@ -1,0 +1,16 @@
+[
+  {
+    "wallet": "0x3e8e470972291783a91de529454d366349810425",
+    "label": "DoKwon",
+    "submittedBy": "0xYourWalletAddressHere",
+    "notes": "Known for running Terra rug",
+    "timestamp": "2024-05-05T12:00:00Z"
+  },
+  {
+    "wallet": "0x000000000000000000000000000000000000dead",
+    "label": "FakeInfluencer69",
+    "submittedBy": "0xYourWalletAddressHere",
+    "notes": "Promoting scam tokens daily",
+    "timestamp": "2024-05-06T13:15:00Z"
+  }
+]
