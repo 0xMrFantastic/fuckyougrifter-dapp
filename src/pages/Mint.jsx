@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import useWallet from '../hooks/useWallet'
 import { ethers } from 'ethers'
 
-const CONTRACT_ADDRESS = '0x869a41ec146d869cE22C97FD36f97Fe7aF48AA3B'
+const CONTRACT_ADDRESS = '0xc0eB2B5773d05c667018fe005910f407B20D530f'
 const CONTRACT_ABI = [
   {
     "inputs": [{ "internalType": "address", "name": "recipient", "type": "address" }],
