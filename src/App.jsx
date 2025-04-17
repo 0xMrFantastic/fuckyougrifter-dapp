@@ -9,7 +9,7 @@ import Submit from './pages/Submit'
 import useWallet from './hooks/useWallet'
 
 function App() {
-  const { address, connect } = useWallet()
+  const { address, connect, disconnect } = useWallet()
   const owner = '0xe0b0487Bcb7D0b73edCeb90794056DC891AcBc69'
   const isOwner = address?.toLowerCase() === owner.toLowerCase()
 
@@ -18,7 +18,7 @@ function App() {
       <header>
         <h1>FuckYouGrifter</h1>
 
-        <nav>
+        <nav style={{ marginBottom: '12px' }}>
           <Link to="/">Home</Link> |{" "}
           <Link to="/mint">Mint</Link> |{" "}
           <Link to="/explorer">Explorer</Link> |{" "}
@@ -31,10 +31,15 @@ function App() {
           {!address ? (
             <button onClick={connect}>🦊 Connect Wallet</button>
           ) : (
-            <p>
-              ✅ Connected: {address.slice(0, 6)}...{address.slice(-4)}
-              {isOwner && " (Owner)"}
-            </p>
+            <div>
+              <p>
+                ✅ Connected: {address.slice(0, 6)}...{address.slice(-4)}
+                {isOwner && " (Owner)"}
+              </p>
+              <button onClick={disconnect} style={{ marginTop: '5px' }}>
+                ❌ Disconnect
+              </button>
+            </div>
           )}
         </div>
       </header>
@@ -50,23 +55,28 @@ function App() {
         </Routes>
       </main>
 
-      {/* 🌐 Footer */}
       <footer style={{ marginTop: '40px', textAlign: 'center', fontSize: '14px' }}>
         <hr />
         <p>
-          ☠️ View the <strong>FUGA Token</strong>:
-          {" "}
-          <a href="https://basescan.org/token/0xc0eB2B5773d05c667018fe005910f407B20D530f" target="_blank" rel="noopener noreferrer">
+          ☠️ View the <strong>FUGA Token</strong>:{" "}
+          <a
+            href="https://basescan.org/token/0xc0eB2B5773d05c667018fe005910f407B20D530f"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             BaseScan
           </a>{" "}
-          | Contract:
-          {" "}
-          <a href="https://basescan.org/address/0xc0eB2B5773d05c667018fe005910f407B20D530f" target="_blank" rel="noopener noreferrer">
+          | Contract:{" "}
+          <a
+            href="https://basescan.org/address/0xc0eB2B5773d05c667018fe005910f407B20D530f"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             0xc0eB...530f
           </a>
         </p>
         <p>
-          🧾 Token Symbol: <code>FUGA</code> | Standard: <code>ERC-721 Soulbound</code>
+          🧾 Token Symbol: <code>FUGA</code> | Type: <code>Soulbound ERC-721</code>
         </p>
       </footer>
     </Router>
