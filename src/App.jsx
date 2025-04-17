@@ -78,6 +78,16 @@ function App() {
         <p>
           🧾 Token Symbol: <code>FUGA</code> | Type: <code>Soulbound ERC-721</code>
         </p>
+        <p style={{ marginTop: "12px" }}>
+          ✍️ Built by{" "}
+          <a
+            href="https://x.com/0xMrFantastic"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            @0xMrFantastic
+          </a>
+        </p>
       </footer>
     </Router>
   )
