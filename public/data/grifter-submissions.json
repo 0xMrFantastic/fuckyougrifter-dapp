@@ -5,10 +5,18 @@
     "label": "Sam Bankman-Fried",
     "submittedBy": "0xOWNER",
     "notes": "Tagging for FTX collapse",
-    "timestamp": "2024-06-03T12:00:00Z"
+    "timestamp": "2025-04-016T12:00:00Z"
   },
   {
     "tokenId": 2,
+    "wallet": " 0x8149f77504007450711023cf0ec11bdd6348401f",
+    "label": "Insidr ",
+    "submittedBy": "0xOWNER",
+    "notes": "$1R0R rogue dev, proofs https://x.com/hackenclub/status/1912401064361419190",
+    "timestamp": "2025-04-18T15:10:00Z"
+  },
+    {
+    "tokenId": 3,
     "wallet": "0x000000000000000000000000000000000000dead",
     "label": "FakeInfluencer69",
     "submittedBy": "0xOWNER",
