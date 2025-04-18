@@ -57,22 +57,29 @@ const Explorer = () => {
 
   return (
     <div>
-      <h2>Grifter Token Explorer</h2>
+      <h2>FUGA Explorer</h2>
 
       {loading && <p>Loading tagged grifters...</p>}
 
       {!loading && records.length === 0 && <p>No FUGA tokens minted yet.</p>}
 
       {!loading && records.length > 0 && (
-        <ul>
-          {records.map((entry, index) => (
-            <li key={index}>
-              <strong>{entry.label || 'Unlabeled'}</strong> — <a href={entry.link} target="_blank" rel="noopener noreferrer">{entry.wallet}</a> — <em>Token #{entry.tokenId}</em> — {entry.timestamp}
-            </li>
-          ))}
-        </ul>
-      )}
+        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+  {records.map((entry, index) => (
+    <div key={index} style={{ marginBottom: '30px' }}>
+      <div>
+        <strong>Token #{entry.tokenId}</strong> —{" "}
+        <a href={entry.link} target="_blank" rel="noopener noreferrer">
+          {entry.wallet}
+        </a>
+      </div>
+      <div>
+        {entry.label || 'Unlabeled'} — {entry.timestamp}
+      </div>
+      <hr style={{ marginTop: '12px' }} />
     </div>
+  ))}
+</div>
   )
 }
 
