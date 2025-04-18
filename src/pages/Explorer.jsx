@@ -37,7 +37,7 @@ const Explorer = () => {
           return {
             tokenId,
             wallet: tx.to,
-            label: match?.label || null,
+            label: match?.label || 'Unlabeled',
             link: `https://basescan.org/address/${tx.to}`,
             timestamp: new Date(parseInt(tx.timeStamp) * 1000).toISOString().slice(0, 10),
           }
@@ -65,21 +65,23 @@ const Explorer = () => {
 
       {!loading && records.length > 0 && (
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-  {records.map((entry, index) => (
-    <div key={index} style={{ marginBottom: '30px' }}>
-      <div>
-        <strong>Token #{entry.tokenId}</strong> —{" "}
-        <a href={entry.link} target="_blank" rel="noopener noreferrer">
-          {entry.wallet}
-        </a>
-      </div>
-      <div>
-        {entry.label || 'Unlabeled'} — {entry.timestamp}
-      </div>
-      <hr style={{ marginTop: '12px' }} />
+          {records.map((entry, index) => (
+            <div key={index} style={{ marginBottom: '30px' }}>
+              <div>
+                <strong>Token #{entry.tokenId}</strong> —{" "}
+                <a href={entry.link} target="_blank" rel="noopener noreferrer">
+                  {entry.wallet}
+                </a>
+              </div>
+              <div>
+                {entry.label} — {entry.timestamp}
+              </div>
+              <hr style={{ marginTop: '12px' }} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
-  ))}
-</div>
   )
 }
 
