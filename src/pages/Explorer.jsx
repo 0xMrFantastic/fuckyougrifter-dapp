@@ -10,36 +10,41 @@ const Explorer = () => {
   useEffect(() => {
     const fetchMintsAndLabels = async () => {
       try {
-        // 1. Fetch mints from BaseScan
-        const txRes = await fetch(`https://api.basescan.org/api?module=account&action=tokennfttx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=1000&sort=asc&apikey=${API_KEY}`)
+        const txRes = await fetch(
+          `https://api.basescan.org/api?module=account&action=tokennfttx&contractaddress=${CONTRACT_ADDRESS}&page=1&offset=1000&sort=asc&apikey=${API_KEY}`
+        )
+
         const txData = await txRes.json()
 
         if (txData.status !== '1' || !Array.isArray(txData.result)) {
           throw new Error('BaseScan mint fetch failed')
         }
 
-        const mints = txData.result.filter(tx => tx.from.toLowerCase() === '0x0000000000000000000000000000000000000000')
+        const mints = txData.result.filter(
+          (tx) =>
+            tx.from.toLowerCase() ===
+            '0x0000000000000000000000000000000000000000'
+        )
 
-        // 2. Fetch your label index
         const labelRes = await fetch('/data/grifter-submissions.json')
         const labelData = await labelRes.json()
 
-        // 3. Format label map by tokenId (as string)
         const labelMap = {}
-        labelData.forEach(item => {
+        labelData.forEach((item) => {
           labelMap[item.tokenId.toString()] = item
         })
 
-        // 4. Merge mint records + labels
-        const labeledResults = mints.map(tx => {
+        const labeledResults = mints.map((tx) => {
           const tokenId = tx.tokenID
-          const match = labelMap[tokenId]
+          const labelEntry = labelMap[tokenId] || {}
           return {
             tokenId,
             wallet: tx.to,
-            label: match?.label || 'Unlabeled',
+            label: labelEntry.label || 'Unlabeled',
             link: `https://basescan.org/address/${tx.to}`,
-            timestamp: new Date(parseInt(tx.timeStamp) * 1000).toISOString().slice(0, 10),
+            timestamp: new Date(parseInt(tx.timeStamp) * 1000)
+              .toISOString()
+              .slice(0, 10),
           }
         })
 
@@ -61,22 +66,30 @@ const Explorer = () => {
 
       {loading && <p>Loading tagged grifters...</p>}
 
-      {!loading && records.length === 0 && <p>No FUGA tokens minted yet.</p>}
+      {!loading && records.length === 0 && (
+        <p>No FUGA tokens minted yet.</p>
+      )}
 
       {!loading && records.length > 0 && (
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
           {records.map((entry, index) => (
-            <div key={index} style={{ marginBottom: '30px' }}>
+            <div key={index} style={{ marginBottom: '20px' }}>
               <div>
-                <strong>Token #{entry.tokenId}</strong> —{" "}
-                <a href={entry.link} target="_blank" rel="noopener noreferrer">
+                <strong>Token #{entry.tokenId}</strong> —{' '}
+                <a
+                  href={entry.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
                   {entry.wallet}
                 </a>
               </div>
               <div>
                 {entry.label} — {entry.timestamp}
               </div>
-              <hr style={{ marginTop: '12px' }} />
+              {index !== records.length - 1 && (
+                <hr style={{ marginTop: '12px' }} />
+              )}
             </div>
           ))}
         </div>
